@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:icon="@drawable/ic_home_black_24dp"
+        android:title="Home"/>
+
+    <item android:title="Movies">
+        <menu>
+            <item
+                android:id="@+id/movieToprated"
+                android:icon="@drawable/ic_movie_black_24dp"
+                android:title="Top rated" />
+            <item
+                android:id="@+id/movieUpcoming"
+                android:icon="@drawable/ic_movie_black_24dp"
+                android:title="Upcoming" />
+            <item
+                android:id="@+id/moviePopular"
+                android:icon="@drawable/ic_movie_black_24dp"
+                android:title="Popular" />
+
+        </menu>
+
+    </item>
+
+    <item android:title="Tv Series">
+        <menu>
+            <item android:id="@+id/tvTopRated"
+                android:icon="@drawable/ic_tv_black_24dp"
+                android:title="Top rated"/>
+
+            <item android:id="@+id/tvUpcoming"
+                android:icon="@drawable/ic_tv_black_24dp"
+                android:title="Upcoming"/>
+
+            <item android:id="@+id/tvPopular"
+                android:icon="@drawable/ic_tv_black_24dp"
+                android:title="Popular"/>
+        </menu>
+    </item>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>
+
+</menu>
