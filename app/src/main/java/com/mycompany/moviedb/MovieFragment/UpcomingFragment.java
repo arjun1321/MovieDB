@@ -18,8 +18,6 @@ import com.mycompany.moviedb.MovieDetailActivity;
 import com.mycompany.moviedb.Network.ApiClient;
 import com.mycompany.moviedb.R;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -27,32 +25,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by Arjun Kumar on 06-04-2016.
+ * Created by Arjun Kumar on 08-04-2016.
  */
-public class SearchFragment extends Fragment {
-
+public class UpcomingFragment extends Fragment {
     ArrayList<Movie> movieList;
     GridImageAdapter adapter;
 
-    String searchText;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.toprated_fragment_layout, container, false);
         GridView gv = (GridView) v.findViewById(R.id.toprated_gridview);
-
-        Bundle bundle = getArguments();
-        searchText = bundle.getString("search text");
-
-        String encodeString;
-        try {
-            encodeString = URLEncoder.encode(searchText, "UTF-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-            encodeString = searchText;
-        }
-
 
         movieList = new ArrayList<>();
 
@@ -72,7 +56,7 @@ public class SearchFragment extends Fragment {
         });
 
 
-        Call<MovieJsonObject> jsonObject = ApiClient.getInterface().searchMovie(encodeString);
+        Call<MovieJsonObject> jsonObject = ApiClient.getInterface().getUpComingMovies();
 
         jsonObject.enqueue(new Callback<MovieJsonObject>() {
             @Override

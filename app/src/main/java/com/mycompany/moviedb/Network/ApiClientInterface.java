@@ -1,6 +1,7 @@
 package com.mycompany.moviedb.Network;
 
 
+import com.mycompany.moviedb.Model.GenreJsonObject;
 import com.mycompany.moviedb.Model.MovieJsonObject;
 
 import retrofit2.Call;
@@ -17,4 +18,13 @@ public interface ApiClientInterface {
 
     @GET("search/movie?api_key=52a1dc564a183650a3b560723582b6f6")
     Call<MovieJsonObject> searchMovie(@Query("query") String movieName);
+
+    @GET("genre/movie/list?api_key=52a1dc564a183650a3b560723582b6f6")
+    Call<GenreJsonObject> getGenreObject();
+
+    @GET("movie/upcoming?api_key=52a1dc564a183650a3b560723582b6f6")
+    Call<MovieJsonObject> getUpComingMovies();
+
+    @GET("movie/popular?api_key=52a1dc564a183650a3b560723582b6f6")
+    Call<MovieJsonObject> getPopularMovies();
 }

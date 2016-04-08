@@ -6,31 +6,34 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/movieImage"/>
+        android:id="@+id/movieImage" />
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:id="@+id/genre"
-        android:text="15sp"
+        android:textSize="15sp"
         android:textColor="#ffffff"
-        android:paddingLeft="12dp"
+        android:paddingLeft="8dp"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingLeft="12dp"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_star_rate_black_18dp"/>
+            android:src="@drawable/ic_star_rate_white_18dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/starRate"
-            android:textColor="#ffffff"/>
+            android:textColor="#ffffff"
+            android:paddingLeft="15dp"/>
     </LinearLayout>
 
 </LinearLayout>

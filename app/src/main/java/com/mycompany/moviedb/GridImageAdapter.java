@@ -2,12 +2,14 @@ package com.mycompany.moviedb;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mycompany.moviedb.Model.Genre;
 import com.mycompany.moviedb.Model.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -45,7 +47,8 @@ public class GridImageAdapter extends BaseAdapter {
 
     public class ViewHolder {
         ImageView movieImage;
-        TextView movieName;
+        TextView genre;
+        TextView starRate;
     }
 
     @Override
@@ -55,8 +58,9 @@ public class GridImageAdapter extends BaseAdapter {
 
             ViewHolder vh = new ViewHolder();
 
-            vh.movieName = (TextView) convertView.findViewById(R.id.movieName);
+            vh.genre = (TextView) convertView.findViewById(R.id.genre);
             vh.movieImage = (ImageView) convertView.findViewById(R.id.movieImage);
+            vh.starRate =(TextView) convertView.findViewById(R.id.starRate);
 
             convertView.setTag(vh);
         }
@@ -66,7 +70,24 @@ public class GridImageAdapter extends BaseAdapter {
         Movie movie = (Movie)getItem(position);
         String posterPath = movie.getPosterPath();
 
-        vh.movieName.setText(movie.getTitle());
+        String genres = "";
+        ArrayList<Integer> genreId = movie.getGenreId();
+        for (int i=0; i<genreId.size(); i++){
+            String genre="";
+            int id = genreId.get(i);
+            for(int j=0; j<MainActivity.genresList.size(); j++){
+                if(MainActivity.genresList.get(j).getId() == id){
+                    genre = MainActivity.genresList.get(j).getName();
+                    break;
+                }
+            }
+            genres = genres +" "+ genre;
+            Log.i("genre data", genre);
+        }
+
+        Log.i("genres list", genres);
+        vh.starRate.setText(String.valueOf(movie.getRating()));
+        vh.genre.setText(genres);
 
         Picasso.with(context)
         .load(baseUrl+posterPath+"?api_key=52a1dc564a183650a3b560723582b6f6")

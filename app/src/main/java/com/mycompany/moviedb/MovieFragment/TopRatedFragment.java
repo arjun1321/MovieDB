@@ -1,17 +1,20 @@
 package com.mycompany.moviedb.MovieFragment;
 
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.mycompany.moviedb.GridImageAdapter;
 import com.mycompany.moviedb.Model.Movie;
 import com.mycompany.moviedb.Model.MovieJsonObject;
+import com.mycompany.moviedb.MovieDetailActivity;
 import com.mycompany.moviedb.Network.ApiClient;
 import com.mycompany.moviedb.R;
 
@@ -29,6 +32,7 @@ public class TopRatedFragment extends Fragment {
     ArrayList<Movie> movieList;
     GridImageAdapter adapter;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -39,6 +43,18 @@ public class TopRatedFragment extends Fragment {
 
         adapter = new GridImageAdapter(getActivity(), movieList);
         gv.setAdapter(adapter);
+
+
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent = new Intent();
+                intent.setClass(getActivity(), MovieDetailActivity.class);
+                intent.putExtra("movie object",movieList.get(position));
+                startActivity(intent);
+            }
+        });
 
 
         Call<MovieJsonObject> jsonObject = ApiClient.getInterface().getJsonObject();
@@ -61,7 +77,6 @@ public class TopRatedFragment extends Fragment {
 
             }
         });
-
 
         return v;
     }

@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -13,11 +15,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.SearchView;
 
+import com.mycompany.moviedb.Model.Genre;
+import com.mycompany.moviedb.Model.GenreJsonObject;
+import com.mycompany.moviedb.MovieFragment.PopularFragment;
+import com.mycompany.moviedb.MovieFragment.SearchFragment;
 import com.mycompany.moviedb.MovieFragment.TopRatedFragment;
+import com.mycompany.moviedb.MovieFragment.UpcomingFragment;
+import com.mycompany.moviedb.Network.ApiClient;
+
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static ArrayList<Genre> genresList;
+    String searchText ="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +61,30 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        genresList = new ArrayList<>();
+        Call<GenreJsonObject> genreJsonObjectCall = ApiClient.getInterface().getGenreObject();
+        genreJsonObjectCall.enqueue(new Callback<GenreJsonObject>() {
+            @Override
+            public void onResponse(Call<GenreJsonObject> call, Response<GenreJsonObject> response) {
+                GenreJsonObject genreJsonObject = response.body();
+
+                for(int i=0; i<genreJsonObject.getGenres().size(); i++){
+                    genresList.add(genreJsonObject.getGenres().get(i));
+                }
+
+                Log.i("genreobject", String.valueOf(genresList.size()));
+            }
+
+            @Override
+            public void onFailure(Call<GenreJsonObject> call, Throwable t) {
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -59,8 +101,33 @@ public class MainActivity extends AppCompatActivity
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        android.support.v7.widget.SearchView searchView = (android.support.v7.widget.SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.serachAction));
+
+        searchView.setOnQueryTextListener(new android.support.v7.widget.SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                searchText = query;
+                Fragment fragment = new SearchFragment();
+                Bundle bundle = new Bundle();
+                bundle.putString("search text", searchText);
+                fragment.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
+
         return true;
     }
+
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -86,9 +153,16 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.movieToprated) {
             fragment = new TopRatedFragment();
             getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            setTitle("Top rated movies");
         } else if (id == R.id.movieUpcoming) {
+            fragment = new UpcomingFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            setTitle("Upcoming movies");
 
         } else if (id == R.id.moviePopular) {
+            fragment = new PopularFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            setTitle("Popular movies");
 
         } else if (id == R.id.tvTopRated) {
 

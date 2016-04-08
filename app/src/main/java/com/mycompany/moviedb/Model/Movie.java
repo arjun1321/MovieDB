@@ -3,6 +3,7 @@ package com.mycompany.moviedb.Model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Created by Arjun Kumar on 27-03-2016.
@@ -20,6 +21,16 @@ public class Movie implements Serializable{
     private float rating;
     @SerializedName("poster_path")
     private String posterPath;
+    @SerializedName("genre_ids")
+    private ArrayList<Integer> genreId;
+
+    public ArrayList<Integer> getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(ArrayList<Integer> genreId) {
+        this.genreId = genreId;
+    }
 
     public String getPosterPath() {
         return posterPath;
