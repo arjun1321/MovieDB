@@ -1,4 +1,4 @@
-package com.mycompany.moviedb.MovieFragment;
+package com.mycompany.moviedb.TvFragment;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -12,12 +12,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.mycompany.moviedb.GridImageAdapter;
-import com.mycompany.moviedb.Model.Movie;
-import com.mycompany.moviedb.Model.MovieJsonObject;
+import com.mycompany.moviedb.Model.Tv;
+import com.mycompany.moviedb.Model.TvJsonObject;
 import com.mycompany.moviedb.MovieDetailActivity;
 import com.mycompany.moviedb.Network.ApiClient;
 import com.mycompany.moviedb.R;
+import com.mycompany.moviedb.TvImageAdapter;
 
 import java.util.ArrayList;
 
@@ -26,12 +26,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by Arjun Kumar on 05-04-2016.
+ * Created by Arjun Kumar on 10-04-2016.
  */
-public class TopRatedFragment extends Fragment {
-
-    ArrayList<Movie> movieList;
-    GridImageAdapter adapter;
+public class PopularTvFragment extends Fragment {
+    ArrayList<Tv> TvList;
+    TvImageAdapter adapter;
 
 
     @Nullable
@@ -40,9 +39,9 @@ public class TopRatedFragment extends Fragment {
         View v = inflater.inflate(R.layout.toprated_fragment_layout, container, false);
         GridView gv = (GridView) v.findViewById(R.id.toprated_gridview);
 
-        movieList = new ArrayList<>();
+        TvList = new ArrayList<>();
 
-        adapter = new GridImageAdapter(getActivity(), movieList);
+        adapter = new TvImageAdapter(getActivity(), TvList);
         gv.setAdapter(adapter);
 
 
@@ -52,29 +51,29 @@ public class TopRatedFragment extends Fragment {
 
                 Intent intent = new Intent();
                 intent.setClass(getActivity(), MovieDetailActivity.class);
-                intent.putExtra("movie object",movieList.get(position));
+                intent.putExtra("movie object",TvList.get(position));
                 startActivity(intent);
             }
         });
 
 
-        Call<MovieJsonObject> jsonObject = ApiClient.getInterface().getJsonObject();
+        Call<TvJsonObject> jsonObject = ApiClient.getInterface().getPopularTv();
 
-        jsonObject.enqueue(new Callback<MovieJsonObject>() {
+        jsonObject.enqueue(new Callback<TvJsonObject>() {
             @Override
-            public void onResponse(Call<MovieJsonObject> call, Response<MovieJsonObject> response) {
-                MovieJsonObject jsonObject1 = response.body();
+            public void onResponse(Call<TvJsonObject> call, Response<TvJsonObject> response) {
+                TvJsonObject jsonObject1 = response.body();
 
-                for (int i = 0; i < jsonObject1.getMovieList().size(); i++)
-                    movieList.add(jsonObject1.getMovieList().get(i));
+                for (int i = 0; i < jsonObject1.getResults().size(); i++)
+                    TvList.add(jsonObject1.getResults().get(i));
 
-                Log.i("movie data", String.valueOf(movieList.size()));
+                Log.i("movie data", String.valueOf(TvList.size()));
 
                 adapter.notifyDataSetChanged();
             }
 
             @Override
-            public void onFailure(Call<MovieJsonObject> call, Throwable t) {
+            public void onFailure(Call<TvJsonObject> call, Throwable t) {
                 Toast.makeText(getActivity(), "Check your internet connection", Toast.LENGTH_LONG);
 
             }

@@ -31,10 +31,6 @@
                 android:icon="@drawable/ic_tv_black_24dp"
                 android:title="Top rated"/>
 
-            <item android:id="@+id/tvUpcoming"
-                android:icon="@drawable/ic_tv_black_24dp"
-                android:title="Upcoming"/>
-
             <item android:id="@+id/tvPopular"
                 android:icon="@drawable/ic_tv_black_24dp"
                 android:title="Popular"/>

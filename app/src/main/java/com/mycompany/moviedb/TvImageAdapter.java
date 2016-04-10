@@ -1,7 +1,6 @@
 package com.mycompany.moviedb;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +8,21 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mycompany.moviedb.Model.Genre;
-import com.mycompany.moviedb.Model.Movie;
+import com.mycompany.moviedb.Model.Tv;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 /**
- * Created by Arjun Kumar on 05-04-2016.
+ * Created by Arjun Kumar on 10-04-2016.
  */
-public class GridImageAdapter extends BaseAdapter {
-
+public class TvImageAdapter extends BaseAdapter{
     String baseUrl = "http://image.tmdb.org/t/p/w342";
 
     Context context;
-    ArrayList<Movie> movies;
+    ArrayList<Tv> movies;
 
-    public GridImageAdapter(Context context, ArrayList<Movie> movies) {
+    public TvImageAdapter(Context context, ArrayList<Tv> movies) {
         this.context = context;
         this.movies = movies;
     }
@@ -67,7 +64,7 @@ public class GridImageAdapter extends BaseAdapter {
 
         ViewHolder vh = (ViewHolder) convertView.getTag();
 
-        Movie movie = (Movie)getItem(position);
+        Tv movie = (Tv)getItem(position);
         String posterPath = movie.getPosterPath();
 
         String genres = "";
@@ -86,12 +83,12 @@ public class GridImageAdapter extends BaseAdapter {
         }
 
         Log.i("genres list", genres);
-        vh.starRate.setText(String.valueOf(movie.getRating()));
+        vh.starRate.setText(String.valueOf(movie.getVoteAverage()));
         vh.genre.setText(genres);
 
         Picasso.with(context)
-        .load(baseUrl+posterPath+"?api_key=52a1dc564a183650a3b560723582b6f6")
-        .into(vh.movieImage);
+                .load(baseUrl+posterPath+"?api_key=52a1dc564a183650a3b560723582b6f6")
+                .into(vh.movieImage);
 
 
         return convertView;

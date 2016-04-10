@@ -19,11 +19,14 @@ import android.widget.SearchView;
 
 import com.mycompany.moviedb.Model.Genre;
 import com.mycompany.moviedb.Model.GenreJsonObject;
+import com.mycompany.moviedb.MovieFragment.HomeFragment;
 import com.mycompany.moviedb.MovieFragment.PopularFragment;
 import com.mycompany.moviedb.MovieFragment.SearchFragment;
 import com.mycompany.moviedb.MovieFragment.TopRatedFragment;
 import com.mycompany.moviedb.MovieFragment.UpcomingFragment;
 import com.mycompany.moviedb.Network.ApiClient;
+import com.mycompany.moviedb.TvFragment.PopularTvFragment;
+import com.mycompany.moviedb.TvFragment.TopRatedTvFragment;
 
 import java.util.ArrayList;
 
@@ -61,6 +64,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Fragment fragment = new HomeFragment();
+        getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
 
 
         genresList = new ArrayList<>();
@@ -150,6 +156,11 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
         int id = item.getItemId();
 
+        if(id == R.id.home){
+            fragment = new HomeFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+
+        } else
         if (id == R.id.movieToprated) {
             fragment = new TopRatedFragment();
             getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
@@ -165,11 +176,15 @@ public class MainActivity extends AppCompatActivity
             setTitle("Popular movies");
 
         } else if (id == R.id.tvTopRated) {
-
-        } else if (id == R.id.tvUpcoming) {
+            fragment = new TopRatedTvFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            setTitle("Top rated tv shows");
 
         } else if (id == R.id.tvPopular) {
 
+            fragment = new PopularTvFragment();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            setTitle("Popular tv shows");
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

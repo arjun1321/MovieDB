@@ -4,12 +4,15 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.mycompany.moviedb.GridImageAdapter;
@@ -18,6 +21,7 @@ import com.mycompany.moviedb.Model.MovieJsonObject;
 import com.mycompany.moviedb.MovieDetailActivity;
 import com.mycompany.moviedb.Network.ApiClient;
 import com.mycompany.moviedb.R;
+import com.mycompany.moviedb.RecyclerViewMovieAdapter;
 
 import java.util.ArrayList;
 
@@ -26,39 +30,51 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 /**
- * Created by Arjun Kumar on 05-04-2016.
+ * Created by Arjun Kumar on 10-04-2016.
  */
-public class TopRatedFragment extends Fragment {
+public class NowPlayingMoviesFragment extends Fragment{
 
+    RecyclerViewMovieAdapter adapter;
     ArrayList<Movie> movieList;
-    GridImageAdapter adapter;
-
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.toprated_fragment_layout, container, false);
-        GridView gv = (GridView) v.findViewById(R.id.toprated_gridview);
+        View v = inflater.inflate(R.layout.recycler_view_layout, container, false);
+        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
 
         movieList = new ArrayList<>();
 
-        adapter = new GridImageAdapter(getActivity(), movieList);
-        gv.setAdapter(adapter);
+        adapter = new RecyclerViewMovieAdapter(getActivity(), movieList);
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
 
 
-        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+                return false;
+            }
 
-                Intent intent = new Intent();
-                intent.setClass(getActivity(), MovieDetailActivity.class);
-                intent.putExtra("movie object",movieList.get(position));
-                startActivity(intent);
+            @Override
+            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+//                Intent intent = new Intent();
+//                intent.setClass(getActivity(), MovieDetailActivity.class);
+//                intent.putExtra("movie object", movieList.get(position));
+//                startActivity(intent);
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
             }
         });
 
 
-        Call<MovieJsonObject> jsonObject = ApiClient.getInterface().getJsonObject();
+        Call<MovieJsonObject> jsonObject = ApiClient.getInterface().getNowPlayingMovies();
 
         jsonObject.enqueue(new Callback<MovieJsonObject>() {
             @Override
@@ -79,6 +95,7 @@ public class TopRatedFragment extends Fragment {
 
             }
         });
+
 
         return v;
     }

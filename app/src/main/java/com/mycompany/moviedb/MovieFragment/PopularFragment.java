@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.mycompany.moviedb.GridImageAdapter;
 import com.mycompany.moviedb.Model.Movie;
@@ -73,6 +74,7 @@ public class PopularFragment extends Fragment {
 
             @Override
             public void onFailure(Call<MovieJsonObject> call, Throwable t) {
+                Toast.makeText(getActivity(), "Check your internet connection", Toast.LENGTH_LONG);
 
             }
         });
