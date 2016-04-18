@@ -1,6 +1,7 @@
-package com.mycompany.moviedb;
+package com.mycompany.moviedb.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mycompany.moviedb.Model.Movie;
+import com.mycompany.moviedb.MainActivity;
+import com.mycompany.moviedb.Model.Tv;
+import com.mycompany.moviedb.R;
+import com.mycompany.moviedb.TvDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -17,11 +21,12 @@ import java.util.ArrayList;
 /**
  * Created by Arjun Kumar on 10-04-2016.
  */
-public class RecyclerViewMovieAdapter extends RecyclerView.Adapter<RecyclerViewMovieAdapter.MyViewHolder> {
+public class RecyclerViewTvAdapter extends RecyclerView.Adapter<RecyclerViewTvAdapter.MyViewHolder> {
+
     String baseUrl = "http://image.tmdb.org/t/p/w342";
     Context context;
 
-    ArrayList<Movie> movieList;
+    ArrayList<Tv> movieList;
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
@@ -32,13 +37,13 @@ public class RecyclerViewMovieAdapter extends RecyclerView.Adapter<RecyclerViewM
             super(view);
             movieImage = (ImageView)view.findViewById(R.id.movieImage);
             genre = (TextView) view.findViewById(R.id.genre);
-            starRate = (TextView) view.findViewById(R.id.starRate);
+//            starRate = (TextView) view.findViewById(R.id.starRate);
         }
 
 
     }
 
-    public RecyclerViewMovieAdapter(Context context,ArrayList<Movie> movieList) {
+    public RecyclerViewTvAdapter(Context context,ArrayList<Tv> movieList) {
         this.movieList = movieList;
         this.context = context;
     }
@@ -50,9 +55,9 @@ public class RecyclerViewMovieAdapter extends RecyclerView.Adapter<RecyclerViewM
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
 
-        Movie movie = movieList.get(position);
+        Tv movie = movieList.get(position);
         String posterPath = movie.getPosterPath();
 
         String genres = "";
@@ -60,7 +65,7 @@ public class RecyclerViewMovieAdapter extends RecyclerView.Adapter<RecyclerViewM
         for (int i=0; i<genreId.size(); i++){
             String genre="";
             int id = genreId.get(i);
-            for(int j=0; j<MainActivity.genresList.size(); j++){
+            for(int j = 0; j< MainActivity.genresList.size(); j++){
                 if(MainActivity.genresList.get(j).getId() == id){
                     genre = MainActivity.genresList.get(j).getName();
                     break;
@@ -70,14 +75,28 @@ public class RecyclerViewMovieAdapter extends RecyclerView.Adapter<RecyclerViewM
             Log.i("genre data", genre);
         }
 
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+
+            int position = holder.getAdapterPosition();
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setClass(context, TvDetailActivity.class);
+                intent.putExtra("movie object",movieList.get(position));
+                context.startActivity(intent);
+            }
+        };
+
+        holder.movieImage.setOnClickListener(onClickListener);
+
         Log.i("genres list", genres);
-        holder.starRate.setText(String.valueOf(movie.getRating()));
+//        holder.starRate.setText(String.valueOf(movie.getVoteAverage()));
         holder.genre.setText(genres);
         holder.genre.setMaxWidth(300);
 
         Picasso.with(context)
                 .load(baseUrl+posterPath+"?api_key=52a1dc564a183650a3b560723582b6f6")
-                .resize(250, 300)
+                .resize(300,440)
                 .into(holder.movieImage);
     }
 

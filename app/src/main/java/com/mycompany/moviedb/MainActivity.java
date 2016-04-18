@@ -2,6 +2,7 @@ package com.mycompany.moviedb;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.view.MenuItemCompat;
@@ -36,6 +37,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
 
     public static ArrayList<Genre> genresList;
     String searchText ="";
@@ -158,32 +160,33 @@ public class MainActivity extends AppCompatActivity
 
         if(id == R.id.home){
             fragment = new HomeFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
+            setTitle("MovieDB");
 
         } else
         if (id == R.id.movieToprated) {
             fragment = new TopRatedFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
             setTitle("Top rated movies");
         } else if (id == R.id.movieUpcoming) {
             fragment = new UpcomingFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
             setTitle("Upcoming movies");
 
         } else if (id == R.id.moviePopular) {
             fragment = new PopularFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
             setTitle("Popular movies");
 
         } else if (id == R.id.tvTopRated) {
             fragment = new TopRatedTvFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
             setTitle("Top rated tv shows");
 
         } else if (id == R.id.tvPopular) {
 
             fragment = new PopularTvFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
             setTitle("Popular tv shows");
         }
 

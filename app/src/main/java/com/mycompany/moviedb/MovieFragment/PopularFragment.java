@@ -12,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.mycompany.moviedb.GridImageAdapter;
+import com.mycompany.moviedb.Adapter.GridImageAdapter;
 import com.mycompany.moviedb.Model.Movie;
 import com.mycompany.moviedb.Model.MovieJsonObject;
 import com.mycompany.moviedb.MovieDetailActivity;

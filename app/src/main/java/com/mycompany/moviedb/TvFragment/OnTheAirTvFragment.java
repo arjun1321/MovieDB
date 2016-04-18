@@ -3,7 +3,7 @@ package com.mycompany.moviedb.TvFragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -16,13 +16,15 @@ import com.mycompany.moviedb.Model.Tv;
 import com.mycompany.moviedb.Model.TvJsonObject;
 import com.mycompany.moviedb.Network.ApiClient;
 import com.mycompany.moviedb.R;
-import com.mycompany.moviedb.RecyclerViewTvAdapter;
+import com.mycompany.moviedb.Adapter.RecyclerViewTvAdapter;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.support.v7.widget.LinearLayoutManager.HORIZONTAL;
 
 /**
  * Created by Arjun Kumar on 10-04-2016.
@@ -36,13 +38,13 @@ public class OnTheAirTvFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.recycler_view_layout, container, false);
-        RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
+        final RecyclerView recyclerView = (RecyclerView) v.findViewById(R.id.recyclerView);
 
         TvList = new ArrayList<>();
 
         adapter = new RecyclerViewTvAdapter(getActivity(), TvList);
 
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -58,7 +60,8 @@ public class OnTheAirTvFragment extends Fragment {
 
 //                Intent intent = new Intent();
 //                intent.setClass(getActivity(), MovieDetailActivity.class);
-//                intent.putExtra("movie object", movieList.get(position));
+//                intent.putExtra("tv object", TvList);
+//                intent.putExtra("tv id",10);
 //                startActivity(intent);
             }
 

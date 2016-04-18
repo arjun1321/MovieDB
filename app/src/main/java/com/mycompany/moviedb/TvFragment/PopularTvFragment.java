@@ -14,10 +14,10 @@ import android.widget.Toast;
 
 import com.mycompany.moviedb.Model.Tv;
 import com.mycompany.moviedb.Model.TvJsonObject;
-import com.mycompany.moviedb.MovieDetailActivity;
 import com.mycompany.moviedb.Network.ApiClient;
 import com.mycompany.moviedb.R;
-import com.mycompany.moviedb.TvImageAdapter;
+import com.mycompany.moviedb.TvDetailActivity;
+import com.mycompany.moviedb.Adapter.TvImageAdapter;
 
 import java.util.ArrayList;
 
@@ -50,7 +50,7 @@ public class PopularTvFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Intent intent = new Intent();
-                intent.setClass(getActivity(), MovieDetailActivity.class);
+                intent.setClass(getActivity(), TvDetailActivity.class);
                 intent.putExtra("movie object",TvList.get(position));
                 startActivity(intent);
             }

@@ -46,4 +46,7 @@ public interface ApiClientInterface {
     @GET("tv/on_the_air?api_key=52a1dc564a183650a3b560723582b6f6")
     Call<TvJsonObject> getOntheAirTv();
 
+    @GET("tv/{id}/videos?api_key=52a1dc564a183650a3b560723582b6f6")
+    Call<MovieTrailerJsonObject> getTvTrailerJsonObject(@Path("id") int id);
+
 }

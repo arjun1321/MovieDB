@@ -12,10 +12,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.mycompany.moviedb.Model.Movie;
-import com.mycompany.moviedb.YoutubeFragment.YouTubeFragment;
+import com.mycompany.moviedb.Model.Tv;
+import com.mycompany.moviedb.YoutubeFragment.YouTubeTvFragment;
 
-public class MovieDetailActivity extends AppCompatActivity {
+public class TvDetailActivity extends AppCompatActivity {
 
     TextView genre, overview, rate, moviename;
 
@@ -43,20 +43,20 @@ public class MovieDetailActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        Movie movie = (Movie) intent.getSerializableExtra("movie object");
+        Tv movie = (Tv) intent.getSerializableExtra("movie object");
         int id = movie.getId();
-        String movieName = movie.getTitle();
+        String movieName = movie.getName();
 
-        Fragment fragment = new YouTubeFragment();
+        Fragment fragment = new YouTubeTvFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("movieId", id);
         fragment.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
         setTitle(movieName + ": Trailer");
 
-        overview.setText(movie.getDescription());
-        rate.setText(String.valueOf(movie.getRating()));
-        moviename.setText(movie.getTitle());
+        overview.setText(movie.getOverView());
+        rate.setText(String.valueOf(movie.getVoteAverage()));
+        moviename.setText(movie.getName());
 
     }
 
@@ -68,4 +68,5 @@ public class MovieDetailActivity extends AppCompatActivity {
         item.setVisible(false);
         return true;
     }
+
 }

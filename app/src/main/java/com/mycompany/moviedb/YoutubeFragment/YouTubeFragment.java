@@ -1,4 +1,4 @@
-package com.mycompany.moviedb;
+package com.mycompany.moviedb.YoutubeFragment;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
@@ -20,6 +20,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.mycompany.moviedb.Model.MovieTrailer;
 import com.mycompany.moviedb.Model.MovieTrailerJsonObject;
 import com.mycompany.moviedb.Network.ApiClient;
+import com.mycompany.moviedb.R;
 
 import java.util.ArrayList;
 

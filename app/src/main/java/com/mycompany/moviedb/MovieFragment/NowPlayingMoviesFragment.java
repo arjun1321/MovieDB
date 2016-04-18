@@ -1,33 +1,30 @@
 package com.mycompany.moviedb.MovieFragment;
 
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.Toast;
 
-import com.mycompany.moviedb.GridImageAdapter;
 import com.mycompany.moviedb.Model.Movie;
 import com.mycompany.moviedb.Model.MovieJsonObject;
-import com.mycompany.moviedb.MovieDetailActivity;
 import com.mycompany.moviedb.Network.ApiClient;
 import com.mycompany.moviedb.R;
-import com.mycompany.moviedb.RecyclerViewMovieAdapter;
+import com.mycompany.moviedb.Adapter.RecyclerViewMovieAdapter;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.support.v7.widget.LinearLayoutManager.HORIZONTAL;
 
 /**
  * Created by Arjun Kumar on 10-04-2016.
@@ -46,9 +43,10 @@ public class NowPlayingMoviesFragment extends Fragment{
         movieList = new ArrayList<>();
 
         adapter = new RecyclerViewMovieAdapter(getActivity(), movieList);
-
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 1, HORIZONTAL, false);
         recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setClipToPadding(true);
+        recyclerView.setHasFixedSize(true);
         recyclerView.setAdapter(adapter);
 
 

@@ -23,6 +23,10 @@
         <activity
             android:name=".MovieDetailActivity"
             android:label="MovieDB"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TvDetailActivity"
+            android:label="@string/title_activity_tv_detail"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
