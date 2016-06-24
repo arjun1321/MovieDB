@@ -1,6 +1,7 @@
 package com.mycompany.moviedb;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.support.design.widget.FloatingActionButton;
@@ -49,14 +50,6 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -97,12 +90,19 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        FragmentManager manager = getFragmentManager();
+        if(manager.getBackStackEntryCount() > 0){
+            manager.popBackStackImmediate();
+            manager.beginTransaction().commit();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
         }
+
     }
 
     @Override
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity
                 Bundle bundle = new Bundle();
                 bundle.putString("search text", searchText);
                 fragment.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack("search").commit();
                 return true;
             }
 
@@ -160,33 +160,33 @@ public class MainActivity extends AppCompatActivity
 
         if(id == R.id.home){
             fragment = new HomeFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).commit();
             setTitle("MovieDB");
 
         } else
         if (id == R.id.movieToprated) {
             fragment = new TopRatedFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack("TopRated").commit();
             setTitle("Top rated movies");
         } else if (id == R.id.movieUpcoming) {
             fragment = new UpcomingFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack("Upcoming").commit();
             setTitle("Upcoming movies");
 
         } else if (id == R.id.moviePopular) {
             fragment = new PopularFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack("Popular").commit();
             setTitle("Popular movies");
 
         } else if (id == R.id.tvTopRated) {
             fragment = new TopRatedTvFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack("tvTopRated").commit();
             setTitle("Top rated tv shows");
 
         } else if (id == R.id.tvPopular) {
 
             fragment = new PopularTvFragment();
-            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction().replace(R.id.fragment_frame, fragment).addToBackStack("tvPopular").commit();
             setTitle("Popular tv shows");
         }
 
